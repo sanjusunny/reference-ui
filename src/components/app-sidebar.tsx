@@ -74,8 +74,7 @@ const data = {
   ],
 }
 
-// App name as per package.json
-const APP_NAME = "Studio"
+const APP_NAME = "Reference UI"
 const APP_VERSION = "v1.0.0"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
