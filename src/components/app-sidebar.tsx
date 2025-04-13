@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import { Link } from "react-router"
 import {
   BadgeCheck,
   CheckSquare,
@@ -32,7 +33,7 @@ import {
   SidebarRail,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { useAuth } from "@/hooks/useAuth"
+import { useAppStore } from "@/store/app-store"
 
 interface SidebarLinkProps {
   to: string
@@ -44,22 +45,22 @@ interface SidebarLinkProps {
 function SidebarLink({ to, icon, children, isActive }: SidebarLinkProps) {
   return (
     <SidebarMenuItem>
-      <a 
-        href={to} 
+      <Link 
+        to={to} 
         className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium ${
           isActive ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5'
         }`}
       >
         {icon}
         <span>{children}</span>
-      </a>
+      </Link>
     </SidebarMenuItem>
   )
 }
 
 export function AppSidebar() {
   const { isMobile } = useSidebar()
-  const { user, signOut } = useAuth()
+  const { user, signOut } = useAppStore()
 
   return (
     <Sidebar collapsible="icon">
@@ -107,7 +108,7 @@ export function AppSidebar() {
                 <Button variant="ghost" className="w-full justify-start gap-2">
                   <Avatar className="h-6 w-6">
                     <AvatarImage src="/placeholder.svg" alt={user?.username || "User"} />
-                    <AvatarFallback>{user?.username?.charAt(0) || "U"}</AvatarFallback>
+                    <AvatarFallback>{user?.username ? user.username.charAt(0) : "U"}</AvatarFallback>
                   </Avatar>
                   <span className="truncate">{user?.username || "User"}</span>
                   <ChevronsUpDown className="ml-auto size-4 opacity-50" />
@@ -123,12 +124,12 @@ export function AppSidebar() {
                   <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src="/placeholder.svg" alt={user?.username || "User"} />
-                      <AvatarFallback>{user?.username?.charAt(0) || "U"}</AvatarFallback>
+                      <AvatarFallback>{user?.username ? user.username.charAt(0) : "U"}</AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       <span className="truncate font-semibold">{user?.username || "User"}</span>
                       <span className="truncate text-xs text-muted-foreground">
-                        {user?.attributes?.email || "user@example.com"}
+                        {user?.email || "user@example.com"}
                       </span>
                     </div>
                   </div>
@@ -145,7 +146,7 @@ export function AppSidebar() {
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={signOut}>
+                <DropdownMenuItem onClick={() => signOut()}>
                   <LogOut className="mr-2 h-4 w-4" />
                   Log out
                 </DropdownMenuItem>
