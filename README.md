@@ -29,11 +29,17 @@ A modern React starter template optimized for building customized web applicatio
 │   ├── assets/          # Project assets
 │   ├── components/      # Reusable components
 │   │   ├── ui/          # shadcn/ui components
-│   │   └── layouts/     # Layout components
+│   │   └── app-sidebar.tsx # Main application sidebar
 │   ├── hooks/           # Custom React hooks
 │   ├── layouts/         # Page layouts
+│   │   ├── private-layout.tsx # Layout for authenticated users
+│   │   └── public-layout.tsx  # Layout for unauthenticated users
 │   ├── lib/             # Utility functions and libraries
 │   ├── pages/           # Page components
+│   │   ├── dashboard.tsx # Main dashboard page
+│   │   ├── login.tsx     # Authentication page
+│   │   ├── settings.tsx  # User settings page
+│   │   └── not-found.tsx # 404 page
 │   ├── routes/          # Application routing
 │   ├── store/           # State management
 │   ├── App.tsx          # Main application component
