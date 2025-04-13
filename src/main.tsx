@@ -4,11 +4,14 @@ import "./index.css";
 import App from "./App.tsx";
 import { Amplify } from 'aws-amplify'
 import outputs from "../amplify_outputs.json";
+import { ThemeProvider, amplifyTheme } from "./lib/amplify-theme";
 
 Amplify.configure(outputs);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <ThemeProvider theme={amplifyTheme}>
+      <App />
+    </ThemeProvider>
   </StrictMode>
 );

@@ -80,3 +80,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom styles */
+
+.amplify-button--primary {
+  margin-top: 1rem !important;
+}
+.amplify-tabs__list {
+  display: none !important;
+}
