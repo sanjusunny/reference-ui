@@ -32,7 +32,7 @@ export function LoginPage() {
         }}></div>
         
         <div className="mb-8 relative z-10">
-          <h1 className="mb-2 text-4xl font-bold text-white">TaskMaster</h1>
+          <h1 className="mb-2 text-4xl font-medium text-white">TaskMaster</h1>
           <p className="text-lg text-white/80">
             A powerful task management application to keep you organized and productive.
           </p>
