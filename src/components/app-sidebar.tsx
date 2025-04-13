@@ -1,19 +1,23 @@
-import { ReactNode } from "react"
-import { Link } from "react-router"
+"use client"
+
+import type * as React from "react"
 import {
   BadgeCheck,
-  CheckSquare,
+  Bell,
+  BookOpen,
+  Bot,
+  ChevronRight,
   ChevronsUpDown,
-  Home,
-  ListTodo,
+  CreditCard,
+  GalleryVerticalEnd,
   LogOut,
-  Plus,
-  Settings,
-  User
+  Settings2,
+  Sparkles,
+  SquareTerminal,
 } from "lucide-react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,77 +31,171 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarRail,
   useSidebar,
 } from "@/components/ui/sidebar"
 import { useAppStore } from "@/store/app-store"
+import { useAuth } from "@/hooks/use-auth"
 
-interface SidebarLinkProps {
-  to: string
-  icon: ReactNode
-  children: ReactNode
-  isActive?: boolean
+// This is sample data.
+const data = {
+  navMain: [
+    {
+      title: "Playground",
+      url: "#",
+      icon: SquareTerminal,
+      isActive: true,
+      items: [
+        {
+          title: "History",
+          url: "#",
+        },
+        {
+          title: "Starred",
+          url: "#",
+        },
+        {
+          title: "Settings",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Models",
+      url: "#",
+      icon: Bot,
+      items: [
+        {
+          title: "Genesis",
+          url: "#",
+        },
+        {
+          title: "Explorer",
+          url: "#",
+        },
+        {
+          title: "Quantum",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Documentation",
+      url: "#",
+      icon: BookOpen,
+      items: [
+        {
+          title: "Introduction",
+          url: "#",
+        },
+        {
+          title: "Get Started",
+          url: "#",
+        },
+        {
+          title: "Tutorials",
+          url: "#",
+        },
+        {
+          title: "Changelog",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Settings",
+      url: "#",
+      icon: Settings2,
+      items: [
+        {
+          title: "General",
+          url: "#",
+        },
+        {
+          title: "Team",
+          url: "#",
+        },
+        {
+          title: "Billing",
+          url: "#",
+        },
+        {
+          title: "Limits",
+          url: "#",
+        },
+      ],
+    },
+  ],
 }
 
-function SidebarLink({ to, icon, children, isActive }: SidebarLinkProps) {
-  return (
-    <SidebarMenuItem>
-      <Link 
-        to={to} 
-        className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium ${
-          isActive ? 'bg-primary/10 text-primary' : 'hover:bg-primary/5'
-        }`}
-      >
-        {icon}
-        <span>{children}</span>
-      </Link>
-    </SidebarMenuItem>
-  )
-}
+// App name as per package.json
+const APP_NAME = "Studio"
+const APP_VERSION = "v1.0.0"
 
-export function AppSidebar() {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { isMobile } = useSidebar()
   const { user, signOut } = useAppStore()
+  const { authStatus } = useAuth()
+  
+  const isAuthenticated = authStatus === 'authenticated' && user
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <div className="flex items-center gap-2 px-4 py-3">
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <CheckSquare className="size-4" />
+            <SidebarMenuButton size="lg">
+              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                <GalleryVerticalEnd className="size-4" />
               </div>
               <div className="flex flex-col gap-0.5 leading-none">
-                <span className="font-semibold">TaskMaster</span>
-                <span className="text-xs text-muted-foreground">v1.0.0</span>
+                <span className="font-semibold">{APP_NAME}</span>
+                <span className="text-xs">{APP_VERSION}</span>
               </div>
-            </div>
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarMenu>
-          <SidebarLink to="/dashboard" icon={<Home className="size-4" />} isActive>
-            Dashboard
-          </SidebarLink>
-          <SidebarLink to="/todos" icon={<ListTodo className="size-4" />}>
-            My Tasks
-          </SidebarLink>
-          <SidebarLink to="/todos/new" icon={<Plus className="size-4" />}>
-            New Task
-          </SidebarLink>
-          <SidebarLink to="/completed" icon={<BadgeCheck className="size-4" />}>
-            Completed
-          </SidebarLink>
-          <SidebarLink to="/settings" icon={<Settings className="size-4" />}>
-            Settings
-          </SidebarLink>
-        </SidebarMenu>
+        <SidebarGroup>
+          <SidebarMenu>
+            {data.navMain.map((item) => (
+              <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton tooltip={item.title}>
+                      {item.icon && <item.icon />}
+                      <span>{item.title}</span>
+                      <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {item.items?.map((subItem) => (
+                        <SidebarMenuSubItem key={subItem.title}>
+                          <SidebarMenuSubButton asChild>
+                            <a href={subItem.url}>
+                              <span>{subItem.title}</span>
+                            </a>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
 
       <SidebarFooter>
@@ -105,50 +203,65 @@ export function AppSidebar() {
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="w-full justify-start gap-2">
-                  <Avatar className="h-6 w-6">
-                    <AvatarImage src="/placeholder.svg" alt={user?.username || "User"} />
-                    <AvatarFallback>{user?.username ? user.username.charAt(0) : "U"}</AvatarFallback>
+                <SidebarMenuButton
+                  size="lg"
+                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                >
+                  <Avatar className="h-8 w-8 rounded-lg">
+                    <AvatarImage src={isAuthenticated ? user?.photoURL || "/placeholder.svg" : "/placeholder.svg"} alt={isAuthenticated ? user?.username : "User"} />
+                    <AvatarFallback className="rounded-lg">{isAuthenticated ? user?.username?.charAt(0)?.toUpperCase() || "U" : "U"}</AvatarFallback>
                   </Avatar>
-                  <span className="truncate">{user?.username || "User"}</span>
-                  <ChevronsUpDown className="ml-auto size-4 opacity-50" />
-                </Button>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-semibold">{isAuthenticated ? user?.username || user?.email : "Guest"}</span>
+                    <span className="truncate text-xs">{isAuthenticated ? user?.email : "Not signed in"}</span>
+                  </div>
+                  <ChevronsUpDown className="ml-auto size-4" />
+                </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                className="w-[--radix-dropdown-menu-trigger-width] min-w-56"
+                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
                 side={isMobile ? "bottom" : "right"}
                 align="end"
                 sideOffset={4}
               >
                 <DropdownMenuLabel className="p-0 font-normal">
                   <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage src="/placeholder.svg" alt={user?.username || "User"} />
-                      <AvatarFallback>{user?.username ? user.username.charAt(0) : "U"}</AvatarFallback>
+                    <Avatar className="h-8 w-8 rounded-lg">
+                      <AvatarImage src={isAuthenticated ? user?.photoURL || "/placeholder.svg" : "/placeholder.svg"} alt={isAuthenticated ? user?.username : "User"} />
+                      <AvatarFallback className="rounded-lg">{isAuthenticated ? user?.username?.charAt(0)?.toUpperCase() || "U" : "U"}</AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">{user?.username || "User"}</span>
-                      <span className="truncate text-xs text-muted-foreground">
-                        {user?.email || "user@example.com"}
-                      </span>
+                      <span className="truncate font-semibold">{isAuthenticated ? user?.username || user?.email : "Guest"}</span>
+                      <span className="truncate text-xs">{isAuthenticated ? user?.email : "Not signed in"}</span>
                     </div>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    Profile
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Settings className="mr-2 h-4 w-4" />
-                    Settings
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    Upgrade to Pro
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => signOut()}>
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>
+                    <BadgeCheck className="mr-2 h-4 w-4" />
+                    Account
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    Billing
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Bell className="mr-2 h-4 w-4" />
+                    Notifications
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={signOut}>
                   <LogOut className="mr-2 h-4 w-4" />
-                  Log out
+                  {isAuthenticated ? "Log out" : "Sign in"}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
