@@ -29,7 +29,7 @@ export function DashboardPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
           <p className="text-muted-foreground">
             Welcome{user?.username ? `, ${user.username}` : ''}! Manage your tasks below.
           </p>
