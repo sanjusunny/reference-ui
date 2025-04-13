@@ -18,11 +18,22 @@ export function LoginPage() {
   return (
     <div className="flex h-screen">
       {/* Left side (50%) - Image and app description */}
-      <div className="hidden w-1/2 flex-col justify-between bg-primary/10 p-8 md:flex">
-        <div className="aspect-square max-w-md rounded-xl bg-muted/20" />
-        <div className="mb-8">
-          <h1 className="mb-2 text-4xl font-bold">TaskMaster</h1>
-          <p className="text-lg text-muted-foreground">
+      <div 
+        className="hidden w-1/2 flex-col justify-end bg-primary/10 p-8 md:flex relative"
+        style={{
+          backgroundImage: 'url(/splash.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        {/* Gradient overlay */}
+        <div className="absolute inset-0" style={{
+          background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%)',
+        }}></div>
+        
+        <div className="mb-8 relative z-10">
+          <h1 className="mb-2 text-4xl font-bold text-white">TaskMaster</h1>
+          <p className="text-lg text-white/80">
             A powerful task management application to keep you organized and productive.
           </p>
         </div>
