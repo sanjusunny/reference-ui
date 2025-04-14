@@ -29,6 +29,8 @@ A modern React starter template optimized for building customized web applicatio
 │   ├── assets/          # Project assets
 │   ├── components/      # Reusable components
 │   │   ├── ui/          # shadcn/ui components
+│   │   ├── chat/        # Chat interface components
+│   │   ├── tasks/       # Task management components
 │   │   └── app-sidebar.tsx # Main application sidebar
 │   ├── hooks/           # Custom React hooks
 │   ├── layouts/         # Page layouts
