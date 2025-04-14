@@ -1,4 +1,4 @@
-# AWS Web Application Starter Template
+# AWS Web Application Starter Template for Code Assistants
 
 A modern React starter template optimized for building customized web applications on AWS. This template provides a solid foundation with React, TypeScript, Vite, Tailwind CSS, and shadcn/ui components, integrated with AWS Amplify for authentication and backend services.
 
