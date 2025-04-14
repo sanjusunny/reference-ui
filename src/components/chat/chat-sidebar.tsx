@@ -17,12 +17,12 @@ export function ChatSidebar() {
           <span className="hidden sm:inline">Chat with AI</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-[400px] sm:w-[540px] p-0">
+      <SheetContent side="right" className="w-[400px] sm:w-[540px] p-0 flex flex-col h-screen">
         <SheetHeader className="px-6 py-4 border-b">
           <SheetTitle>AI Assistant</SheetTitle>
           <SheetDescription>Chat with our AI assistant for help and support.</SheetDescription>
         </SheetHeader>
-        <div className="flex flex-col h-[calc(100vh-4rem)]">
+        <div className="flex flex-col flex-1 overflow-hidden">
           <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
             {/* Chat messages skeleton */}
             <div className="space-y-4">
