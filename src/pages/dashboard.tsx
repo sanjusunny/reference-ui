@@ -19,6 +19,10 @@ const categoryData = [
   { name: "work", value: 8 },
 ]
 
+const progressData = [
+  { name: "in-progress", value: 5 },
+]
+
 // Chart configurations
 const statusConfig = {
   completed: {
@@ -38,6 +42,13 @@ const categoryConfig = {
   work: {
     label: "Work Tasks",
     color: "hsl(var(--chart-2))",
+  },
+}
+
+const progressConfig = {
+  "in-progress": {
+    label: "In Progress",
+    color: "hsl(var(--chart-3))",
   },
 }
 
@@ -76,7 +87,7 @@ export function DashboardPage() {
         </Button>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <RadialChart 
           data={taskStatusData} 
           config={statusConfig} 
@@ -104,6 +115,16 @@ export function DashboardPage() {
           description="January - June 2024"
           showTrend={true}
           trendValue={3.5}
+          trendDirection="up"
+          subtitle="Out of 16 total tasks"
+        />
+        <RadialChart 
+          data={progressData} 
+          config={progressConfig} 
+          title="Task Progress" 
+          description="January - June 2024"
+          showTrend={true}
+          trendValue={2.1}
           trendDirection="up"
           subtitle="Out of 16 total tasks"
         />
