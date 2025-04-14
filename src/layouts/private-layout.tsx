@@ -3,6 +3,7 @@ import { Outlet, Navigate } from 'react-router'
 import { AppSidebar } from '@/components/app-sidebar'
 import { useAppStore } from '@/store/app-store'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { ChatSidebar } from '@/components/chat/chat-sidebar'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -56,6 +57,7 @@ export function PrivateLayout({ children }: PrivateLayoutProps) {
             </div>
           </main>
         </div>
+        <ChatSidebar />
       </div>
     </SidebarProvider>
   )
