@@ -45,7 +45,6 @@ export function RadialChart({
   title,
   description,
   footer,
-  className,
   config,
   dataKey = "value",
   showTrend = false,
@@ -66,7 +65,8 @@ export function RadialChart({
         >
           <RechartsRadialBarChart
             data={data}
-            endAngle={100}
+            endAngle={-40}
+            startAngle={90}
             innerRadius={80}
             outerRadius={140}
           >
