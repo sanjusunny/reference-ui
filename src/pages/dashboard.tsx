@@ -73,7 +73,7 @@ export function DashboardPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
@@ -130,13 +130,9 @@ export function DashboardPage() {
         />
       </div>
       
-      <div className="space-y-4">
-        <div className="rounded-lg border bg-card shadow-sm">
-          <div className="p-4 sm:p-6">
-            <h3 className="text-lg font-medium mb-4">Task Management</h3>
-            <TaskTable onEdit={handleEditTask} />
-          </div>
-        </div>
+      <div className="mt-12">
+        <h3 className="text-lg font-medium mb-4">Task Management</h3>
+        <TaskTable onEdit={handleEditTask} />
       </div>
       
       <TaskModal 

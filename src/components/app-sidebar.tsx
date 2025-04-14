@@ -85,7 +85,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const isAuthenticated = authStatus === 'authenticated' && user
 
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon" className="[&_[data-sidebar=sidebar]]:bg-slate-50 [&_[data-sidebar=sidebar]]:shadow-[inset_-4px_0_12px_-1px_rgba(0,0,0,0.05)]" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
