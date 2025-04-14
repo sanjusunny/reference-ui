@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Outlet, Navigate } from 'react-router'
+import { Outlet, Navigate, useLocation } from 'react-router'
 import { AppSidebar } from '@/components/app-sidebar'
 import { useAppStore } from '@/store/app-store'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
@@ -18,8 +18,17 @@ interface PrivateLayoutProps {
   children?: ReactNode
 }
 
+// Map route paths to their display names
+const routeNames: Record<string, string> = {
+  '/': 'Home',
+  '/dashboard': 'Dashboard',
+  '/settings': 'Settings',
+}
+
 export function PrivateLayout({ children }: PrivateLayoutProps) {
   const { isAuthenticated, isLoading } = useAppStore()
+  const location = useLocation()
+  const pathname = location.pathname
 
   if (isLoading) {
     return <div className="flex h-screen items-center justify-center">Loading...</div>
@@ -28,6 +37,9 @@ export function PrivateLayout({ children }: PrivateLayoutProps) {
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />
   }
+
+  // Get the current route name, defaulting to the pathname if not found in the map
+  const currentRouteName = routeNames[pathname] || pathname.split('/').pop() || 'Home'
 
   return (
     <SidebarProvider>
@@ -41,12 +53,16 @@ export function PrivateLayout({ children }: PrivateLayoutProps) {
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="#">Dashboard</BreadcrumbLink>
+                    <BreadcrumbLink href="/">Home</BreadcrumbLink>
                   </BreadcrumbItem>
-                  <BreadcrumbSeparator className="hidden md:block" />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>Home</BreadcrumbPage>
-                  </BreadcrumbItem>
+                  {pathname !== '/' && (
+                    <>
+                      <BreadcrumbSeparator className="hidden md:block" />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage>{currentRouteName}</BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
+                  )}
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
